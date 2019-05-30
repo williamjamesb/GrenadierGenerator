@@ -3,7 +3,7 @@
 # AUTHOR: Justin Mansell (2018)
 # DESCRIPTION: processes changes to guardsmen squad following a battle
 #=============================================================================#
-from RandomGuardsmen import *
+from RandomGrenadier import *
 from shutil import copyfile
 import random as rd
 import ast
@@ -69,7 +69,7 @@ new_flaws = [
 
 ranks = [
 'Grenadier',
-'Obergrenaider',
+'Obergrenadier',
 'Gefreiter',
 'Obergefreiter',
 'Unteroffizier',
@@ -103,7 +103,7 @@ def load_squad(fname):
         if  line.strip():
             stats[line.split(': ')[0]] = line.split(': ')[1].split('\n')[0]
         else:
-            g = Guardsman()
+            g = Grenadier()
             g.name = stats['Name']
             g.age = int(stats['Age'])
             g.rank = stats['Rank']
@@ -251,7 +251,7 @@ def battle(squad,casualties,morale_losses,deadly_casualties):
         elif bool(set(['Coward','Hesitant','Poor discipline','Pacifist']) & set(g.skill)) or \
             g.personality in ['Pessimist','Green','Sympathizer']:
             morale_save = min([0.25,g.battles/10.0])
-        elif g.rank in ['Lance Sergeant','Sergeant','Lance Corporal']:
+        elif g.rank in ['Feldwebe','Unteroffizier','Obergefreiter']:
             morale_save = max([g.battles/10.0,0.5])
         else:
             morale_save = max([g.battles/10.0,0.25])
@@ -374,11 +374,12 @@ def effects(squad,dead,wounded,fled,VP,special=None):
             g.skill.append('Awesome scar')
         elif rd.random() < 0.5: #Major wound
             wound = rd.choice(critical_wounds)
+            g.flaw.append(wound)
             print(g.name+' gained a critical wound: '+wound)
 
-            #Award the medallion crimson
+            #Award the wounded badge
             if wound in ['Missing leg','Missing arm','Disfigurement','Missing Eye'] and \
-            'Medallion Crimson' not in g.awards:
+            'Verwundetenabzeichen' not in g.awards:
                 print(g.name+' was awarded the Verwundetenabzeichen for their injury')
                 g.remarks.append('Awarded the Verwundetenabzeichen '+str(datetime.date.today()))
                 g.awards.append('Verwundetenabzeichen')
@@ -438,6 +439,9 @@ def effects(squad,dead,wounded,fled,VP,special=None):
     rd.shuffle(squad)
     nominations = squad[0:min([len(squad),nprom])]
     proms_sofar = 0
+
+
+
     for g in nominations:
         current_rank_index = ranks.index(g.rank)
         if current_rank_index > len(ranks)-2:
@@ -529,6 +533,21 @@ def effects(squad,dead,wounded,fled,VP,special=None):
             print(g.name+' gained a new flaw: '+newflaw)
             g.flaw.append(newflaw)
 
+    # Field promotion of new sergeant if original was killed or removed
+    num_ser = 0
+    for g in squad:
+        if g.rank in ['Unteroffizier', 'Feldwebel']:
+            num_ser += 1
+        else:
+            pass
+    for g in squad:
+        if num_ser == 0:
+            g.rank = 'Unteroffizier'
+            print(g.name + ' has been given a field promotion to: ' + g.rank)
+            g.remarks.append('Promoted to ' + g.rank + ' ' + str(datetime.date.today()))
+            num_ser += 1
+        else:
+            pass
     #Medals
     heroicness = VP*len(dead)/float(squad_size) #Heroicness of the battle
 
@@ -650,7 +669,7 @@ def downtime(squad):
     #Replenish squad
     nfill = squad_size - len(squad) #Number to replenish
     for i in range(0,nfill):
-        gi = Guardsman()
+        gi = Grenadier()
         gi = basics(gi)
         gi = demeanor(gi)
         gi = ambition(gi)
@@ -666,6 +685,22 @@ def downtime(squad):
                 gi.flaw = gi.flaw[0:2]
         print(gi.name+' joined the squad.')
         squad.append(gi)
+
+    #If squad was wiped, appoint a new sergeant
+    num_ser = 0
+    for g in squad:
+        if g.rank in ['Unteroffizier', 'Feldwebel']:
+            num_ser += 1
+        else:
+            pass
+    for g in squad:
+        if num_ser == 0:
+            g.rank = 'Unteroffizier'
+            print(g.name + ' has been given a field promotion to: ' + g.rank)
+            g.remarks.append('Promoted to ' + g.rank + ' ' + str(datetime.date.today()))
+            num_ser += 1
+        else:
+            pass
 
     #Socializing
     for gi in squad:

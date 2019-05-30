@@ -35,15 +35,19 @@ for i in range(0,Ng):
 #Grenadier squad
 if squad_type == 'G':
     for g in squad:
-        g.rank = 'Obergrenaider'
+        g.rank = 'Obergrenadier'
 
 #Panzertruppe
 if squad_type == 'P':
     for g in squad:
-        g.rank = 'Obergrenaider'
+        g.rank = 'Obergrenadier'
         g = traits(g) #Add extra skills/flaws
         if len(g.flaw) > 2: #Maximum of 2 flaws
             g.flaw = g.flaw[0:2]
+
+#Platoon Leader
+
+#Company Commander
 
 #Generate friends/rivals
 for gi in squad:
@@ -79,7 +83,7 @@ for gi in squad:
             gi.rivals.append(f.name)
 
 #Appoint the sergeant
-if squad_type in ['G','P']:
+if squad_type in ['G', 'P']:
     serg = 0 #No sergeant yet
     for i in range(0,Ng):
         gi = squad[i]
@@ -92,13 +96,17 @@ if squad_type in ['G','P']:
             # 'Vox operator',
             # 'Standard bearer'
             # ]
-            specialists = ['Obergrenaider']
+            specialists = ['Obergrenadier']
             gi.rank = rd.choice(specialists)
         if gi.age < 21 or len(gi.skill) < 1:
             continue
         if serg == 0:
             gi.rank = 'Unteroffizier'
             serg = 1
+
+#Appoint officer
+
+#Appoint HQ
 
 #Save the squad
 for i in range(0,1000):

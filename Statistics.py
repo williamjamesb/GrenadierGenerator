@@ -4,13 +4,12 @@
 # DESCRIPTION: analyzes guardsmen statistics
 #=============================================================================#
 import matplotlib.pyplot as plt
-from RandomGuardsmen import *
+from RandomGrenadier import *
 import numpy as np
 import ast
 
 #Enter the squads to be analyzed here:
-squads = ['command679','HWP84','HWP281','RussB692','RussD668','RussE440','Scions738',
-'squad68','squad137','squad382','Sentinel938']
+squads = ['squad936']
 
 #Load guardsmen
 active_roster = []
@@ -24,7 +23,7 @@ for file in squads:
         if  line.strip():
             stats[line.split(': ')[0]] = line.split(': ')[1].split('\n')[0]
         else:
-            g = Guardsman()
+            g = Grenadier()
             g.name = stats['Name']
             g.age = int(stats['Age'])
             g.rank = stats['Rank']
@@ -58,7 +57,7 @@ for line in f:
     if  line.strip():
         stats[line.split(': ')[0]] = line.split(': ')[1].split('\n')[0]
     else:
-        g = Guardsman()
+        g = Grenadier()
         g.name = stats['Name']
         g.age = int(stats['Age'])
         g.rank = stats['Rank']
@@ -92,7 +91,7 @@ for line in f:
     if  line.strip():
         stats[line.split(': ')[0]] = line.split(': ')[1].split('\n')[0]
     else:
-        g = Guardsman()
+        g = Grenadier()
         g.name = stats['Name']
         g.age = int(stats['Age'])
         g.rank = stats['Rank']
@@ -181,7 +180,7 @@ battles_fig.savefig('Battles.png', dpi=200)
 ranks_fig = plt.figure(figsize=(10, 6))
 ranks = [
 'Grenadier',
-'Obergrenaider',
+'Obergrenadier',
 'Gefreiter',
 'Obergefreiter',
 'Unteroffizier',
@@ -214,8 +213,7 @@ ranks_fig.savefig('Ranks.png', dpi=200)
 
 #Squad turn over rates
 squads_fig = plt.figure()
-some_squads = ['command679','HWP84','RussB692','RussD668','RussE440','Scions738',
-'squad68','squad137','squad382','SWT590']
+some_squads = ['squad936']
 squad_active = np.zeros(len(some_squads))
 squad_dead = np.zeros(len(some_squads))
 squad_alumni = np.zeros(len(some_squads))

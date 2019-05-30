@@ -29,7 +29,7 @@ def basics(g):
     g.sex = 'male'
     g.name = nm.get_full_name(gender = g.sex)
     g.age = rd.randint(18,28)
-    g.rank = 'Obergrenaider'
+    g.rank = 'Obergrenadier'
     g.remarks = ['Deployed '+str(datetime.date.today())]
     return g
 
