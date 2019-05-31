@@ -73,7 +73,11 @@ ranks = [
 'Gefreiter',
 'Obergefreiter',
 'Unteroffizier',
-'Feldwebel'
+'Feldwebel',
+'Oberfeldwebel',
+'Leutnant',
+'Oberleutnant',
+'Hauptmann'
 ]
 
 legacy = [
@@ -244,14 +248,14 @@ def battle(squad,casualties,morale_losses,deadly_casualties):
         if bool(set(['Brave','Zealous','Nerves of steel','Unshakeable faith']) & set(g.skill)) \
             or (g.personality in ['Heroic','Numb','Jaded','Reckless',\
             'Nihilist','Pious','Loyal','Psychotic']) or (g.flaw == 'Death-wish') \
-            or g.ambition == 'die for the Emperor':
+            or g.ambition == 'die for the Fuhrer':
             morale_save = max([0.75,g.battles/10.0])
 
         #Saving throw due to negiatve traits
         elif bool(set(['Coward','Hesitant','Poor discipline','Pacifist']) & set(g.skill)) or \
             g.personality in ['Pessimist','Green','Sympathizer']:
             morale_save = min([0.25,g.battles/10.0])
-        elif g.rank in ['Feldwebe','Unteroffizier','Obergefreiter']:
+        elif g.rank in ['Feldwebel','Unteroffizier','Obergefreiter']:
             morale_save = max([g.battles/10.0,0.5])
         else:
             morale_save = max([g.battles/10.0,0.25])
@@ -495,7 +499,6 @@ def effects(squad,dead,wounded,fled,VP,special=None):
                 'Executed for desertion',
                 'Executed for desertion',
                 'Sent to a penal legion',
-                'Converted to a servitor'
                 ]
                 fate = rd.choice(fates)
                 print(g.name+' was '+fate)
@@ -548,6 +551,7 @@ def effects(squad,dead,wounded,fled,VP,special=None):
             num_ser += 1
         else:
             pass
+
     #Medals
     heroicness = VP*len(dead)/float(squad_size) #Heroicness of the battle
 
@@ -570,7 +574,7 @@ def effects(squad,dead,wounded,fled,VP,special=None):
             if bool(set(['Brave','Zealous','Nerves of steel','Unshakeable faith','Born leader']) & set(g.skill)) \
                 or (g.personality in ['Heroic','Numb','Jaded','Reckless','Mentor','Optimistic',\
                 'Nihilist','Pious','Loyal','Psychotic']) or (g.flaw == 'Death-wish') \
-                or g.ambition == 'die for the Emperor':
+                or g.ambition == 'die for the Fuhrer':
                 hero_chance1 = 0.1
             else:
                 hero_chance1 = 0.01
@@ -614,13 +618,13 @@ def effects(squad,dead,wounded,fled,VP,special=None):
 
     #Long Service Badge
     for g in squad:
-        if g.battles >= 5:
+        if g.battles >= 8:
             if 'Dienstauszeichnung' not in g.awards:
                 g.awards.append('Dienstauszeichnung')
                 g.remarks.append('Awarded the Dienstauszeichnung '+str(datetime.date.today()))
                 print(g.name+' was awarded the Dienstauszeichnung')
     for g in wounded:
-        if g.battles >= 5:
+        if g.battles >= 8:
             if 'Dienstauszeichnung' not in g.awards:
                 g.awards.append('Dienstauszeichnung')
                 g.remarks.append('Awarded the Dienstauszeichnung '+str(datetime.date.today()))
@@ -635,7 +639,7 @@ def effects(squad,dead,wounded,fled,VP,special=None):
     'die for the Fuhrer',
     ]
     for g in squad:
-        if g.battles > 9 and 'Ritterkreuz des Eisernen Kreuzes mit Eichenlaub' not in g.awards:
+        if g.battles > 20 and 'Ritterkreuz des Eisernen Kreuzes mit Eichenlaub' not in g.awards:
             g.awards.append('Order of Terra')
             g.remarks.append('Awarded the Ritterkreuz des Eisernen Kreuzes mit Eichenlaub '+str(datetime.date.today()))
             print(g.name+' was awarded the Ritterkreuz des Eisernen Kreuzes mit Eichenlaub for their longstanding service')
@@ -647,7 +651,7 @@ def effects(squad,dead,wounded,fled,VP,special=None):
                 squad.remove(g)
 
     for g in wounded:
-        if g.battles > 9 and 'Ritterkreuz des Eisernen Kreuzes mit Eichenlaub' not in g.awards:
+        if g.battles > 20 and 'Ritterkreuz des Eisernen Kreuzes mit Eichenlaub' not in g.awards:
             g.awards.append('Order of Terra')
             g.remarks.append('Awarded the Ritterkreuz des Eisernen Kreuzes mit Eichenlaub '+str(datetime.date.today()))
             print(g.name+' was awarded the ORitterkreuz des Eisernen Kreuzes mit Eichenlaub for their longstanding service')
@@ -670,6 +674,7 @@ def downtime(squad):
     nfill = squad_size - len(squad) #Number to replenish
     for i in range(0,nfill):
         gi = Grenadier()
+        gi = get_name(gi)
         gi = basics(gi)
         gi = demeanor(gi)
         gi = ambition(gi)

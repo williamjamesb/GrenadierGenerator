@@ -1,6 +1,7 @@
 import random as rd
 import names as nm
 import datetime
+import numpy as np
 
 #Internal parameters
 
@@ -24,10 +25,92 @@ class Grenadier:
     battles = 0
     remarks = []
 
+def get_name(g):
+    first_names = [
+        'Hans',
+        'Gunter',
+        'Karl',
+        'Heinz',
+        'Werner',
+        'Gerhard',
+        'Walter',
+        'Kurt',
+        'Horst',
+        'Helmut',
+        'Wilhelm',
+        'Herbert',
+        'Ernst',
+        'Rudolf',
+        'Willi',
+        'Rolf',
+        'Erich',
+        'Heinrich',
+        'Otto',
+        'Alfred',
+        'Hermann',
+        'Paul',
+        'Erwin',
+        'Wolfgang',
+        'Klaus',
+        'Franz',
+        'Georg',
+        'Peter',
+        'Bruno',
+        'Josef',
+        'Siegfried',
+        'Albert',
+        'Adolf',
+        'Reinhard',
+        'Rudi'
+
+    ]
+    last_names = [
+        'Schmidt',
+        'Schneider',
+        'Fischer',
+        'Wagner',
+        'Meyer',
+        'Hoffmann',
+        'Becker',
+        'Koch',
+        'Bauer',
+        'Richter',
+        'Klein',
+        'Wolf',
+        'Hartmann',
+        'Lange',
+        'Neumann',
+        'Schulz',
+        'Schmid',
+        'Herrmann',
+        'Walter',
+        'Fuchs',
+        'Huber',
+        'Jung',
+        'Winkler',
+        'Berger',
+        'Frank',
+        'Lorenz',
+        'Winter',
+        'Martin',
+        'Kraus',
+        'Sommer',
+        'Brandt',
+        'Graf',
+        'Kuhn',
+        'Engel',
+        'Arnold'
+
+    ]
+    first_name = np.random.choice(first_names)
+    last_name = np.random.choice(last_names)
+    g.name = first_name + ' ' + last_name
+    return g
+
+
 #Generate basics
 def basics(g):
     g.sex = 'male'
-    g.name = nm.get_full_name(gender = g.sex)
     g.age = rd.randint(18,28)
     g.rank = 'Obergrenadier'
     g.remarks = ['Deployed '+str(datetime.date.today())]

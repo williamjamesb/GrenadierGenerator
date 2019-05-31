@@ -22,6 +22,7 @@ rd.seed()
 squad = []
 for i in range(0,Ng):
     gi = Grenadier()
+    gi = get_name(gi)
     gi = basics(gi)
     gi = demeanor(gi)
     gi = ambition(gi)
@@ -46,8 +47,23 @@ if squad_type == 'P':
             g.flaw = g.flaw[0:2]
 
 #Platoon Leader
+if squad_type == 'PC':
+    squad[0].rank = 'Leutnant'
+    squad[1].rank = 'Oberfeldwebel'
+    for g in squad:
+        g = traits(g) #Add extra skills/flaws
+        if len(g.flaw) > 2: #Maximum of 2 flaws
+            g.flaw = g.flaw[0:2]
 
 #Company Commander
+if squad_type == 'CC':
+    squad[0].rank = 'Hauptmann'
+    squad[1].rank = 'Oberleutnant'
+    for g in squad:
+        g = traits(g) #Add extra skills/flaws
+        if len(g.flaw) > 2: #Maximum of 2 flaws
+            g.flaw = g.flaw[0:2]
+
 
 #Generate friends/rivals
 for gi in squad:
@@ -103,10 +119,6 @@ if squad_type in ['G', 'P']:
         if serg == 0:
             gi.rank = 'Unteroffizier'
             serg = 1
-
-#Appoint officer
-
-#Appoint HQ
 
 #Save the squad
 for i in range(0,1000):
