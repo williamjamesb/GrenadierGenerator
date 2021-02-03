@@ -11,7 +11,7 @@ import os
 from RandomGrenadier import *
 
 #Settings
-Ng = int(sys.argv[1]) #Number of guardsmen in the squad (read from console)
+Ng = int(sys.argv[1]) #Number of grenadiers in the squad (read from console)
 try:
     squad_type = str(sys.argv[2])
 except:
