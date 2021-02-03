@@ -1,6 +1,6 @@
 #=============================================================================#
 # PROGRAM: Statistics.py
-# AUTHOR: Justin Mansell (2018)
+# AUTHOR: William Brown and David Mihai (2019)
 # DESCRIPTION: analyzes guardsmen statistics
 #=============================================================================#
 import matplotlib.pyplot as plt
