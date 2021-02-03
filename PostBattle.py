@@ -138,10 +138,10 @@ def load_squad(fname):
 
 def battle(squad,casualties,morale_losses,deadly_casualties):
 #Allocates casualties from the battle
-#squad = the list of guardsmen objects in the squad
-#casualties = no. guardsmen removed as casualties that may or may not be dead
-#morale_losses = no. guardsmen removed due to morale
-#deadly_casualties = no. guardsmen who are definitely dead
+#squad = the list of grenadiers objects in the squad
+#casualties = no. grenadiers removed as casualties that may or may not be dead
+#morale_losses = no. grenadiers removed due to morale
+#deadly_casualties = no. grenadiers who are definitely dead
 
     print('------------------BATTLE RESULTS----------------------')
     rd.shuffle(squad)
@@ -631,7 +631,7 @@ def effects(squad,dead,wounded,fled,VP,special=None):
                 print(g.name+' was awarded the Dienstauszeichnung')
 
 
-    #Finally if guardsman has served in 10 battles they can retire
+    #Finally if grenadier has served in 10 battles they can retire
     decline_options = [
     'serve up a cold plate of vengeance',
     'kill communists',
