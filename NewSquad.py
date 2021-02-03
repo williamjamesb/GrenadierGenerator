@@ -1,7 +1,7 @@
 #=============================================================================#
 # PROGRAM: NewSquad.py
 # AUTHOR: William Brown and David Mihai (2019)
-# DESCRIPTION: Generates a list of random guardsmen complete with personalities
+# DESCRIPTION: Generates a list of random grenadier complete with personalities
 # so you can make your opponent feel bad when he inevitably slaughters them.
 #=============================================================================#
 import names as nm #May have to install: sudo pip install names
