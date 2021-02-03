@@ -1,6 +1,6 @@
 #=============================================================================#
 # PROGRAM: NewSquad.py
-# AUTHOR: Justin Mansell (2018)
+# AUTHOR: William Brown and David Mihai (2019)
 # DESCRIPTION: Generates a list of random guardsmen complete with personalities
 # so you can make your opponent feel bad when he inevitably slaughters them.
 #=============================================================================#
