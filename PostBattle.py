@@ -1,7 +1,7 @@
 #=============================================================================#
 # PROGRAM: PostBattle.py
-# AUTHOR: Justin Mansell (2018)
-# DESCRIPTION: processes changes to guardsmen squad following a battle
+# AUTHOR: William Brown and David Mihai (2019)
+# DESCRIPTION: processes changes to grenadier squad following a battle
 #=============================================================================#
 from RandomGrenadier import *
 from shutil import copyfile
